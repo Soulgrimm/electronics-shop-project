@@ -1,4 +1,5 @@
 import csv
+import os.path
 
 
 class Item:
@@ -30,13 +31,12 @@ class Item:
     def name(self, string_name):
         if len(string_name) > 10:
             self.__name = string_name[:10]
-            return self.__name
         self.__name = string_name
-        return self.__name
 
     @classmethod
     def instantiate_from_csv(cls, items):
-        with open(items, newline='', encoding='windows-1251') as csvf:
+        path_to_file = os.path.join(os.path.dirname(__file__), items)
+        with open(path_to_file, newline='', encoding='windows-1251') as csvf:
             reader = csv.DictReader(csvf)
 
             for row in reader:
