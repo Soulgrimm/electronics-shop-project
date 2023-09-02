@@ -33,3 +33,11 @@ def test_name2(test_class):
 def test_string_to_number():
     assert Item.string_to_number('6.6666666')
     assert Item.string_to_number('6')
+
+def test_repr(test_class):
+    item1 = test_class
+    assert repr(item1) == "Item('Компьютер', 150000, 5)"
+
+def test_str(test_class):
+    item1 = test_class
+    assert str(item1) == 'Компьютер'
