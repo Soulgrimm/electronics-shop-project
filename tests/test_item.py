@@ -10,7 +10,7 @@ def test_class():
 
 
 @pytest.fixture
-def test_class1():
+def phone_instance():
     return Phone("Xiaomi", 1500, 2, 6)
 
 
@@ -51,13 +51,13 @@ def test_str(test_class):
     assert str(item1) == 'Компьютер'
 
 
-def test_issubclass(test_class, test_class1):
+def test_issubclass(test_class, phone_instance):
     item1 = test_class
-    item2 = test_class1
+    item2 = phone_instance
     assert item1 + item2 == 7
 
 
-def test_expection(test_class, test_class1):
+def test_expection(test_class):
     item1 = test_class
 
     with pytest.raises(Exception):
