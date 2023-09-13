@@ -2,7 +2,7 @@ import csv
 import os.path
 
 
-class Item():
+class Item:
     """
     Класс для представления товара в магазине.
     """
