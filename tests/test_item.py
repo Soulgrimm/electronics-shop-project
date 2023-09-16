@@ -62,3 +62,11 @@ def test_expection(test_class):
 
     with pytest.raises(Exception):
         item1 + 10000
+
+
+def test_instantiate_from_cs_1():
+    assert Item.instantiate_from_csv('item.csv') == 'Отсутствует файл item.csv'
+
+
+def test_instantiate_from_cs_2():
+    assert Item.instantiate_from_csv('items2_invalid.csv') == 'Файл items.csv поврежден'
