@@ -1,5 +1,6 @@
 import csv
 import os.path
+from src.except_classes import InstantiateCSVError
 
 
 class Item:
@@ -46,12 +47,24 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls, items):
-        path_to_file = os.path.join(os.path.dirname(__file__), items)
-        with open(path_to_file, newline='', encoding='windows-1251') as csvf:
-            reader = csv.DictReader(csvf)
+        try:
+            path_to_file = os.path.join(os.path.dirname(__file__), items)
+            if not os.path.exists(path_to_file):
+                raise FileNotFoundError
+            with open(path_to_file, newline='', encoding='windows-1251') as csvf:
+                reader = csv.DictReader(csvf)
 
-            for row in reader:
-                cls(row['name'], int(row['price']), int(row['quantity']))
+                for row in reader:
+                    if row['quantity'] is None:
+                        raise InstantiateCSVError
+                    cls(row['name'], int(row['price']), int(row['quantity']))
+
+        except FileNotFoundError:
+            print('Отсутствует файл item.csv')
+            return 'Отсутствует файл item.csv'
+        except InstantiateCSVError as ex:
+            print(ex.massage)
+            return ex.massage
 
     @staticmethod
     def string_to_number(str_):

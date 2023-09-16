@@ -3,8 +3,7 @@ from src.item import Item
 
 class MixinLog:
 
-    def __init__(self, name, price, quantity):
-        super().__init__(name, price, quantity)
+    def __init__(self, language):
         self.__language = 'EN'
 
     @property
@@ -22,5 +21,5 @@ class MixinLog:
 
 class Keyboard(MixinLog, Item):
     def __init__(self, name, price, quantity, language='EN'):
-        super().__init__(name, price, quantity)
-        self.__language = language
+        MixinLog.__init__(self, language)
+        Item.__init__(self, name, price, quantity)
