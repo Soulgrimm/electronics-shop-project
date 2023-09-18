@@ -43,28 +43,27 @@ class Item:
     def name(self, string_name):
         if len(string_name) > 10:
             self.__name = string_name[:10]
-        self.__name = string_name
+        else:
+            self.__name = string_name
 
     @classmethod
     def instantiate_from_csv(cls, items):
-        try:
-            path_to_file = os.path.join(os.path.dirname(__file__), items)
-            if not os.path.exists(path_to_file):
-                raise FileNotFoundError
-            with open(path_to_file, newline='', encoding='windows-1251') as csvf:
-                reader = csv.DictReader(csvf)
+        # try:
+        path_to_file = os.path.join(os.path.dirname(__file__), items)
+        if not os.path.exists(path_to_file):
+            raise FileNotFoundError('Отсутствует файл item.csv')
+        with open(path_to_file, newline='', encoding='windows-1251') as csvf:
+            reader = csv.DictReader(csvf)
 
-                for row in reader:
-                    if row['quantity'] is None:
-                        raise InstantiateCSVError
-                    cls(row['name'], int(row['price']), int(row['quantity']))
+            for row in reader:
+                if row['quantity'] is None:
+                    raise InstantiateCSVError('Файл items.csv поврежден')
+                cls(row['name'], int(row['price']), int(row['quantity']))
 
-        except FileNotFoundError:
-            print('Отсутствует файл item.csv')
-            return 'Отсутствует файл item.csv'
-        except InstantiateCSVError as ex:
-            print(ex.massage)
-            return ex.massage
+        # except FileNotFoundError:
+        #     raise FileNotFoundError('Отсутствует файл item.csv')
+        # except InstantiateCSVError as ex:
+        #     raise InstantiateCSVError('Файл items.csv поврежден')
 
     @staticmethod
     def string_to_number(str_):
