@@ -2,6 +2,7 @@
 import pytest
 from src.item import Item
 from src.phone import Phone
+from src.except_classes import InstantiateCSVError
 
 
 @pytest.fixture
@@ -65,8 +66,12 @@ def test_expection(test_class):
 
 
 def test_instantiate_from_cs_1():
-    assert Item.instantiate_from_csv('item.csv') == 'Отсутствует файл item.csv'
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv('item.csv')
+        assert Item.instantiate_from_csv('item.csv') == 'Отсутствует файл item.csv'
 
 
 def test_instantiate_from_cs_2():
-    assert Item.instantiate_from_csv('items2_invalid.csv') == 'Файл items.csv поврежден'
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv('items2_invalid.csv')
+        assert Item.instantiate_from_csv('items2_invalid.csv') == 'Файл items.csv поврежден'
