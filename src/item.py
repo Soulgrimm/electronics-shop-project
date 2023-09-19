@@ -51,12 +51,12 @@ class Item:
         # try:
         path_to_file = os.path.join(os.path.dirname(__file__), items)
         if not os.path.exists(path_to_file):
-            raise FileNotFoundError('Отсутствует файл item.csv')
+            raise FileNotFoundError(f'Отсутствует файл {items}')
         with open(path_to_file, newline='', encoding='windows-1251') as csvf:
             reader = csv.DictReader(csvf)
 
             for row in reader:
-                if row['quantity'] is None:
+                if row['quantity'] is None or row['price'] is None or row['name'] is None:
                     raise InstantiateCSVError('Файл items.csv поврежден')
                 cls(row['name'], int(row['price']), int(row['quantity']))
 

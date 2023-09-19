@@ -68,10 +68,8 @@ def test_expection(test_class):
 def test_instantiate_from_cs_1():
     with pytest.raises(FileNotFoundError):
         Item.instantiate_from_csv('item.csv')
-        assert Item.instantiate_from_csv('item.csv') == 'Отсутствует файл item.csv'
 
 
 def test_instantiate_from_cs_2():
     with pytest.raises(InstantiateCSVError):
         Item.instantiate_from_csv('items2_invalid.csv')
-        assert Item.instantiate_from_csv('items2_invalid.csv') == 'Файл items.csv поврежден'
